@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой список дел</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Светло-серый фон */
+            margin: 40px;
+        }
+        h1 {
+            color: #007BFF; /* Синий заголовок */
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .task-date {
+            font-size: 0.8em;
+            color: gray;
+        }
+        a.delete-btn {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a.delete-btn:hover {
+            text-decoration: underline;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .clear-all {
+            display: inline-block;
+            margin-top: 20px;
+            color: #dc3545;
+            text-decoration: none;
+        }
+        .clear-all:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Мои задачи</h1>
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <div class="task-info">
+                    <span>{{ task.text }}</span>
+                    <span class="task-date">{{ task.date }}</span>
+                </div>
+                <a href="/delete/{{ loop.index0 }}" class="delete-btn">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Добавить задачу</h2>
+    <form method="POST" action="/add">
+        <input type="text" name="task" placeholder="Новая задача" required>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <a href="/clear_all" class="clear-all">Очистить всё</a>
+</body>
+</html>
