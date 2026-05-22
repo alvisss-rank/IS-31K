@@ -44,6 +44,27 @@ def delete_task(task_id):
         save_tasks(tasks)
     return redirect('/')
 
+@app.route('/edit/<int:task_id>', methods=['GET', 'POST'])
+def edit_task(task_id):
+    if task_id < 0 or task_id >= len(tasks):
+        return "Задача не найдена", 404
+
+    task = tasks[task_id]
+
+    if request.method == 'POST':
+        new_text = request.form.get('task', '').strip()
+        old_text = task['text'] 
+        if not new_text:
+            return render_template('edit.html', task=task, message="Текст не может быть пустым!", msg_type="error")
+        if new_text == old_text:
+            return render_template('edit.html', task=task, message="Ничего не изменено", msg_type="info")
+        task['text'] = new_text
+        save_tasks(tasks)
+        return redirect('/')
+
+    else:
+        return render_template('edit.html', task=task)
+
 @app.route('/clear_all')
 def clear_all():
     global tasks

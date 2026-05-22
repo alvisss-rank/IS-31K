@@ -83,7 +83,10 @@
                     <span>{{ task.text }}</span>
                     <span class="task-date">{{ task.date }}</span>
                 </div>
-                <a href="/delete/{{ loop.index0 }}" class="delete-btn">Удалить</a>
+                <div class="actions">
+                    <a href="/edit/{{ loop.index0 }}" class="edit-btn">Редактировать</a>
+                    <a href="/delete/{{ loop.index0 }}" class="delete-btn">Удалить</a>
+                </div>
             </li>
         {% endfor %}
     </ul>
